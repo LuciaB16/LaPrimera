@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -89,10 +90,9 @@ class MainActivity : ComponentActivity() {
     fun calcularVacio(a: Int = 0, b: Int = 0, operacion: () -> Unit) {
     operacion()
     }
-    **/
+     **/
 
 
-    
     // Estados de la app
     override fun onStart() {
         super.onStart()

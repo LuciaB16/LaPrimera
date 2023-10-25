@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,8 +34,10 @@ import com.example.laprimera.ui.theme.LaPrimeraTheme
  */
 @Composable
 fun IU(miViewModel: MyViewModel) {
-
-    Box {
+    val randomData = miViewModel.randomData.value
+    Box (
+        modifier = Modifier.fillMaxSize()
+    ){
         Image(
             painter = painterResource(R.drawable.naturaleza),
             contentDescription = "icono",
@@ -50,7 +53,7 @@ fun IU(miViewModel: MyViewModel) {
         Text( //Línea de texto donde aparece la lista de numero aleatorios después de pulsar el botón
 
             //text = "Numeros: ${miViewModel.getNumero()}",// Llama al método que me devuelve un número aleatorio
-            text = "Numeros: ${miViewModel.getListaRandom()}",// Llama al método que me devuelve la lista de números aleatorios
+            text = "Random numeros: ${randomData.randomNumber}",// Llama al método que me devuelve la lista de números aleatorios
             fontWeight = FontWeight.Light,
             modifier = Modifier
                 .offset(y = 300.dp)
@@ -58,12 +61,27 @@ fun IU(miViewModel: MyViewModel) {
 
 
         )
-        Button( //Botón para generar la lista de números aleatorios
-            onClick = { miViewModel.crearRandom() },
+
+        Text(
             modifier = Modifier
-                //.padding(vertical = 300.dp, horizontal = 90.dp)
-                .offset(y = 330.dp)
-                .offset(x = 40.dp)
+                .offset(y = 350.dp)
+                .offset(x = 30.dp),
+            text = "Lista de números random: ${randomData.randomNumbersList.joinToString(", ")}",
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center
+        )
+        Button(
+            modifier = Modifier
+                .offset(y = 400.dp)
+                .offset(x = 30.dp),//Botón para generar la lista de números aleatorios
+            onClick = {
+                if (randomData.randomNumber != 0) {
+                    miViewModel.reset()
+                } else {
+                    miViewModel.crearRandom()
+                }
+            }
 
 
         ) {// Elementos del botón (imagen y texto)
@@ -198,5 +216,7 @@ fun texto_descriptivo(texto: String) {
 fun login() {
     texto_descriptivo(texto = "Fallo de login")
 }
+
+
 
 

@@ -1,6 +1,7 @@
 package com.example.laprimera
 
 import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -50,29 +51,22 @@ class MyViewModel() : ViewModel() {
     /**
      * Función que crea y almacena numeros aleatorios en una lista
      */
-    fun crearRandom() {
 
-        /*
-         * Genera un numero aleatorio ente 0 y 3 (incluidos) y lo asigna a la variable _numbers.value
-         */
-        _numbers.value = (0..3).random()//el value es por el mutableStateOf
+    private val _randomData = mutableStateOf(RandomNumberData(0, emptyList()))
+    val randomData: State<RandomNumberData> = _randomData
 
-        /*
-         * Añade el numero aleatorio a la listaNumRandom
-         */
-        listaNumRandom.add(_numbers.value)
 
-        Log.d(TAG_LOG, "Añado el numero: ${_numbers.value}")
 
-        /**
-         * For in que recorre listaNumRandom y va imprimiendo cada número de ella
-         */
-        for (numero in listaNumRandom) {
-            Log.d(TAG_LOG, " Lista de números aleatorios: $numero")
-        }
+    fun reset() {
+        _randomData.value = _randomData.value.copy(randomNumber = 0)
+        Log.d(TAG_LOG, "Reiniciando")
+    }
+    fun crearRandom(){
 
-        // _numbers.value = (0..10).random()
-        //Log.d(TAG_LOG, "creamos random ${_numbers.value}")
+        val random = (0..3).random()
+        val updatedList = _randomData.value.randomNumbersList + random
+        _randomData.value = RandomNumberData(random, updatedList)
+        Log.d(TAG_LOG, "Añado el $random")
 
     }
 
